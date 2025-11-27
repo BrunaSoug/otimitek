@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo - Otimitek Engenharia</title>
+    <link rel="icon" href="/image/favicon-32x32.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .btn-animate {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.25rem;
+            color: #fff !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+        }
+
+        .btn-animate::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            transition: all 0.3s;
+        }
+
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            z-index: -1;
+            transition: all 0.3s ease-in-out;
+            border-radius: inherit;
+        }
+
+        .btn-animate:hover::before {
+            width: 100%;
+        }
+        
+        .btn-animate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-animate-yellow { color: #003B73 !important; }
+        .btn-animate-yellow::after { background-color: #F59E0B; }
+        .btn-animate-yellow::before { background-color: #d98c0a; }
+        .btn-animate-yellow:hover { color: #fff !important; }
+        .btn-animate-blue::after { background-color: #003B73; }
+        .btn-animate-blue::before { background-color: #002a52; }
+        .btn-animate-green::after { background-color: #25D366; }
+        .btn-animate-green::before { background-color: #128C7E; }
+        .filter-btn.active {
+            background-color: #F59E0B;
+            color: #003B73;
+            border-color: #F59E0B;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        #modal-overlay {
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 relative w-full flex flex-col min-h-screen">
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300 border-b-4 border-[#003B73] py-4 shadow-xl">
+        <div class="container mx-auto px-4 md:px-8 flex items-center justify-between">
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="/index.html" class="block">
+                    <img src="/image/logo-otimitek.jpg" alt="Otimitek Engenharia" class="h-10 md:h-12 w-auto object-contain">
+                </a>
+            </div>
+            <div class="hidden lg:flex items-center absolute left-1/2 transform -translate-x-1/2">
+                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <a href="index.html" class="text-sm font-bold uppercase tracking-wide px-4 text-slate-600 hover:text-[#003B73] transition-colors">Início</a>
+                        <span class="h-4 w-px bg-slate-300 block"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="#contato" class="text-sm font-bold uppercase tracking-wide px-4 text-slate-600 hover:text-[#003B73] transition-colors">Contato</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center gap-6">
+                <a href="https://wa.me/5522999842500" target="_blank" class="flex items-center gap-2 text-[#003B73] hover:text-green-600 transition-colors font-bold text-sm group">
+                    <i data-lucide="phone" class="text-green-500 w-6 h-6 group-hover:scale-110 transition-transform"></i>
+                    <span>(22) 99984-2500</span>
+                </a>
+                <a href="#contato" class="btn-animate btn-animate-yellow rounded-full gap-2 no-underline">
+                  Fale Conosco <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            <button id="mobile-menu-btn" class="lg:hidden p-2 text-[#003B73] hover:bg-slate-50 rounded-full transition-colors relative">
+                <i data-lucide="menu" id="icon-menu" class="w-7 h-7"></i>
+                <i data-lucide="x" id="icon-close" class="w-7 h-7 hidden"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-slate-100 shadow-xl overflow-hidden transition-all duration-300 origin-top z-40 max-h-0 opacity-0">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="index.html" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Início <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+                <a href="#contato" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Contato <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <section class="relative bg-[#003B73] py-24 mt-[80px] overflow-hidden">
+        <div class="absolute top-0 right-0 w-full h-full opacity-10">
+             <div class="w-full h-full" style="background-image: radial-gradient(#F59E0B 1px, transparent 1px); background-size: 30px 30px;"></div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+            <a href="/index.html" class="inline-flex items-center gap-2 text-slate-300 hover:text-[#F59E0B] mb-4 transition-colors font-bold uppercase text-xs tracking-widest">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar ao Início
+            </a>
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 animate-fade-in-up">
+                Frota Disponível
+            </h1>
+            <p class="text-slate-300 text-lg max-w-2xl animate-fade-in-up delay-100">
+                Selecione o equipamento ideal para sua obra e solicite um orçamento personalizado instantaneamente.
+            </p>
+        </div>
+    </section>
+    <main class="py-16 flex-grow">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-3 mb-12 animate-fade-in-up delay-200">
+                <button onclick="filterSelection('all')" class="filter-btn active px-6 py-2.5 rounded-full bg-[#003B73] text-white font-bold shadow-lg hover:bg-[#F59E0B] hover:text-[#003B73] transition-all transform hover:-translate-y-1">Todos</button>
+                <button onclick="filterSelection('terraplanagem')" class="filter-btn px-6 py-2.5 rounded-full bg-white text-slate-600 border border-slate-200 font-bold hover:border-[#003B73] hover:text-[#003B73] transition-all transform hover:-translate-y-1">Terraplanagem</button>
+                <button onclick="filterSelection('compactacao')" class="filter-btn px-6 py-2.5 rounded-full bg-white text-slate-600 border border-slate-200 font-bold hover:border-[#003B73] hover:text-[#003B73] transition-all transform hover:-translate-y-1">Compactação</button>
+                <button onclick="filterSelection('elevacao')" class="filter-btn px-6 py-2.5 rounded-full bg-white text-slate-600 border border-slate-200 font-bold hover:border-[#003B73] hover:text-[#003B73] transition-all transform hover:-translate-y-1">Elevação</button>
+                <button onclick="filterSelection('caminhoes')" class="filter-btn px-6 py-2.5 rounded-full bg-white text-slate-600 border border-slate-200 font-bold hover:border-[#003B73] hover:text-[#003B73] transition-all transform hover:-translate-y-1">Caminhões</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="filter-item terraplanagem bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-50 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]"></div>
+                        <img src="https://pngimg.com/d/excavator_PNG62.png" class="h-48 object-contain group-hover:scale-110 transition-transform duration-500 z-10" alt="Escavadeira">
+                        <div class="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200 shadow-sm">Disponível</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#F59E0B] uppercase tracking-wider">Terraplanagem</span>
+                            <h3 class="text-2xl font-black text-[#003B73] mt-1 machine-name">Escavadeira Hidráulica</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">Ideal para escavações profundas, demolições e movimentação de carga pesada.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="weight" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Peso</p><p class="text-sm font-bold text-slate-700">22.000 kg</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Potência</p><p class="text-sm font-bold text-slate-700">168 HP</p></div></div>
+                        </div>
+
+                        <div class="mt-auto">
+                            <button onclick="openModal('Escavadeira Hidráulica')" class="btn-animate btn-animate-blue w-full rounded-lg gap-2 no-underline text-sm">
+                                Solicitar Orçamento <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-item terraplanagem bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-50 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]"></div>
+                        <img src="https://bamaqmaquinas.com.br/wp-content/uploads/2024/02/7.png" alt="Trator de Esteira">
+                        <div class="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200 shadow-sm">Disponível</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#F59E0B] uppercase tracking-wider">Terraplanagem</span>
+                            <h3 class="text-2xl font-black text-[#003B73] mt-1 machine-name">Trator de Esteira</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">Potência bruta para nivelamento, desmatamento e empurre.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="weight" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Peso</p><p class="text-sm font-bold text-slate-700">18.000 kg</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="move" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Lâmina</p><p class="text-sm font-bold text-slate-700">3.2 m</p></div></div>
+                        </div>
+                        <div class="mt-auto">
+                            <button onclick="openModal('Trator de Esteira')" class="btn-animate btn-animate-blue w-full rounded-lg gap-2 no-underline text-sm">
+                                Solicitar Orçamento <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-item caminhoes bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-50 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]"></div>
+                        <img src="https://png.pngtree.com/png-vector/20250111/ourmid/pngtree-yellow-cement-mixer-truck-design-for-construction-projects-png-image_15156217.png" class="h-48 object-contain group-hover:scale-110 transition-transform duration-500 z-10" alt="Caminhão Betoneira">
+                        <div class="absolute top-4 right-4 bg-yellow-100 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full border border-yellow-200 shadow-sm">Últimas Unidades</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#F59E0B] uppercase tracking-wider">Caminhões</span>
+                            <h3 class="text-2xl font-black text-[#003B73] mt-1 machine-name">Caminhão Betoneira</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">Mistura e transporte eficiente de concreto para grandes concretagens.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="box" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Capacidade</p><p class="text-sm font-bold text-slate-700">8 m³</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Tração</p><p class="text-sm font-bold text-slate-700">6x4</p></div></div>
+                        </div>
+                        <div class="mt-auto">
+                            <button onclick="openModal('Caminhão Betoneira')" class="btn-animate btn-animate-blue w-full rounded-lg gap-2 no-underline text-sm">
+                                Solicitar Orçamento <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Máquina 4 -->
+                <div class="filter-item compactacao bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-50 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]"></div>
+                        <img src="https://tractorbelequipamentos.com.br/wp-content/uploads/2022/05/imagem-destacada-rolo-compactador-liugong-6612E.png.webp" class="h-48 object-contain group-hover:scale-110 transition-transform duration-500 z-10" alt="Rolo Compactador">
+                        <div class="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200 shadow-sm">Disponível</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#F59E0B] uppercase tracking-wider">Compactação</span>
+                            <h3 class="text-2xl font-black text-[#003B73] mt-1 machine-name">Rolo Compactador</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">Alta eficiência para compactação de bases, sub-bases e asfalto.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="weight" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Peso</p><p class="text-sm font-bold text-slate-700">11.000 kg</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="vibrate" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Tambor</p><p class="text-sm font-bold text-slate-700">Liso/Pata</p></div></div>
+                        </div>
+                        <div class="mt-auto">
+                            <button onclick="openModal('Rolo Compactador')" class="btn-animate btn-animate-blue w-full rounded-lg gap-2 no-underline text-sm">
+                                Solicitar Orçamento <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Máquina 5 (Indisponível) -->
+                <div class="filter-item terraplanagem bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 opacity-75 hover:opacity-100 transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-100 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-slate-300"></div>
+                        <img src="https://beltreq.com.br/wp-content/uploads/2024/04/retroescavadeira.png" class="h-48 object-contain grayscale group-hover:grayscale-0 transition-all duration-500 z-10" alt="Retroescavadeira">
+                        <div class="absolute top-4 right-4 bg-red-100 text-red-700 text-xs font-bold px-3 py-1 rounded-full border border-red-200 shadow-sm">Locado</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Terraplanagem</span>
+                            <h3 class="text-2xl font-black text-slate-700 mt-1 machine-name">Retroescavadeira</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">A máquina mais versátil para canteiros de obras urbanas.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="weight" class="w-4 h-4 text-slate-400"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Peso</p><p class="text-sm font-bold text-slate-600">7.500 kg</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="activity" class="w-4 h-4 text-slate-400"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Tração</p><p class="text-sm font-bold text-slate-600">4x4</p></div></div>
+                        </div>
+                        <div class="mt-auto">
+                            <button disabled class="w-full py-3 rounded-lg font-bold text-slate-400 bg-slate-100 border border-slate-200 cursor-not-allowed flex items-center justify-center gap-2">
+                                Indisponível <i data-lucide="clock" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Máquina 6 -->
+                <div class="filter-item elevacao bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-300 group flex flex-col">
+                    <div class="h-64 bg-slate-50 relative p-6 flex items-center justify-center overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]"></div>
+                        <img src="https://rklocacoes.com.br/wp-content/uploads/2024/03/4.png" class="h-48 object-contain group-hover:scale-110 transition-transform duration-500 z-10" alt="Caminhão Munck">
+                        <div class="absolute top-4 right-4 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200 shadow-sm">Disponível</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-[#F59E0B] uppercase tracking-wider">Elevação</span>
+                            <h3 class="text-2xl font-black text-[#003B73] mt-1 machine-name">Caminhão Munck</h3>
+                            <p class="text-slate-500 text-sm mt-2 line-clamp-2">Guindauto articulado para içamento de cargas e montagens.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-6 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <div class="flex items-center gap-2"><i data-lucide="arrow-up" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Alcance</p><p class="text-sm font-bold text-slate-700">18 Metros</p></div></div>
+                            <div class="flex items-center gap-2"><i data-lucide="box" class="w-4 h-4 text-[#003B73]"></i> <div><p class="text-[10px] uppercase text-slate-400 font-bold">Carga Máx.</p><p class="text-sm font-bold text-slate-700">10 Ton</p></div></div>
+                        </div>
+                        <div class="mt-auto">
+                            <button onclick="openModal('Caminhão Munck')" class="btn-animate btn-animate-blue w-full rounded-lg gap-2 no-underline text-sm">
+                                Solicitar Orçamento <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <section id="contato" class="py-20 bg-[#003B73] text-white relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Fale Conosco</h2>
+            <p class="font-bold uppercase tracking-widest text-sm text-[#F59E0B]">ESTAMOS PRONTOS PARA ATENDER VOCÊ</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- CARD 1 -->
+            <div class="border border-white/20 rounded-2xl p-8 flex flex-col items-start hover:bg-white/5 transition-all group">
+              <div class="w-14 h-14 rounded-full bg-[#F59E0B] text-[#003B73] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <i data-lucide="mail" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-4 text-[#F59E0B]">E-mails</h3>
+              <div class="space-y-2 text-slate-300 text-left">
+                <a href="#" class="block hover:text-white transition-colors">comercial@otimitek.com.br</a>
+                <a href="#" class="block hover:text-white transition-colors">financeiro@otimitek.com.br</a>
+              </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="border border-white/20 rounded-2xl p-8 flex flex-col items-start hover:bg-white/5 transition-all group">
+              <div class="w-14 h-14 rounded-full bg-[#F59E0B] text-[#003B73] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <i data-lucide="phone" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-4 text-[#F59E0B]">Informações</h3>
+              <div class="space-y-2 text-slate-300 text-left">
+                <p>(22) 99984-2500</p>
+                <p class="font-bold text-white text-lg">0800 022 2626</p>
+              </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="border border-white/20 rounded-2xl p-8 flex flex-col items-start hover:bg-white/5 transition-all group">
+                <div class="w-14 h-14 rounded-full bg-[#F59E0B] text-[#003B73] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <i data-lucide="map-pin" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-[#F59E0B]">Endereço</h3>
+                <p class="text-slate-300 leading-relaxed text-left">
+                  Rua Virgulino Ferreira Lampião, nº 21.<br/>
+                  Jockey II<br/>
+                  Campos dos Goytacazes - RJ
+                </p>
+              </div>
+          </div>
+        </div>
+    </section>
+    <footer class="bg-[#002a52] text-white py-12 border-t border-white/5">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+              <div class="flex items-center gap-3 justify-center md:justify-start mb-4">
+                 <a href="/index.html" class="block">
+                    <img src="/image/logo-otimitek.jpg" 
+                         alt="Otimitek Engenharia" 
+                         class="h-10 md:h-12 w-auto object-contain rounded">
+                 </a>
+              </div>
+              <p class="text-slate-400 text-sm mb-4 max-w-xs mx-auto md:mx-0">Soluções robustas em engenharia e locação.</p>
+              <div class="flex gap-4 justify-center md:justify-start">
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+              </div>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Certificado de Conformidade</span>
+              <div class="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="https://www.otimitek.com.br/images/certificacao-conformidade-profissional.jpg" alt="Certificado de Conformidade CREA" class="w-24 h-auto object-contain">
+              </div>
+            </div>
+            <div class="text-center md:text-right text-slate-500 text-sm">
+              <p>&copy; <span id="year"></span> Otimitek Engenharia.</p>
+              <p>Todos os direitos reservados.</p>
+            </div>
+          </div>
+        </div>
+    </footer>
+    <div id="quote-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-overlay" onclick="closeModal()"></div>
+        <div class="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up z-10">
+            <div class="bg-[#003B73] p-6 flex justify-between items-center">
+                <h3 class="text-white font-bold text-xl flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-5 h-5 text-[#F59E0B]"></i>
+                    Solicitar Orçamento
+                </h3>
+                <button onclick="closeModal()" class="text-white/70 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 max-h-[80vh] overflow-y-auto">
+                <p class="text-sm text-slate-500 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    Preencha os dados abaixo para receber uma proposta formal via WhatsApp.
+                </p>
+                <form id="quote-form" onsubmit="submitQuote(event)" class="space-y-4">
+                    <input type="hidden" id="machine-name">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Equipamento</label>
+                        <input type="text" id="display-machine" class="w-full p-3 bg-slate-100 border border-slate-200 rounded-lg font-bold text-[#003B73]" readonly>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Quantidade</label>
+                            <input type="number" id="quantity" min="1" value="1" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Período (Dias)</label>
+                            <input type="number" id="period" min="1" placeholder="Ex: 5" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nome da Empresa (Fantasia)</label>
+                        <input type="text" id="company" placeholder="Sua Empresa Ltda" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">CNPJ (Opcional)</label>
+                            <input type="text" id="cnpj" placeholder="00.000.000/0001-00" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Resp. Contato</label>
+                            <input type="text" id="contact-name" placeholder="Seu Nome" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Local da Obra (Cidade/Estado)</label>
+                        <input type="text" id="location" placeholder="Ex: Campos dos Goytacazes - RJ" class="w-full p-3 border border-slate-200 rounded-lg focus:border-[#003B73] outline-none" required>
+                    </div>
+                    <button type="submit" class="w-full py-4 rounded-lg font-bold text-white bg-[#25D366] hover:bg-[#128C7E] transition-colors flex items-center justify-center gap-2 shadow-lg mt-4">
+                        Enviar Solicitação via WhatsApp
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+        function filterSelection(category) {
+            const items = document.getElementsByClassName('filter-item');
+            const btns = document.getElementsByClassName('filter-btn');
+            for (let btn of btns) {
+                btn.classList.remove('bg-[#003B73]', 'text-white', 'active', 'shadow-lg');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            }
+            const activeBtn = Array.from(btns).find(b => b.getAttribute('onclick').includes(category));
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                activeBtn.classList.add('bg-[#003B73]', 'text-white', 'shadow-lg');
+            }
+
+            if (category === 'all') category = '';
+
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('hidden');
+                if (items[i].className.indexOf(category) === -1) {
+                    items[i].classList.add('hidden');
+                }
+            }
+        }
+        const modal = document.getElementById('quote-modal');
+        const machineNameInput = document.getElementById('machine-name');
+        const displayMachineInput = document.getElementById('display-machine');
+
+        function openModal(machineName) {
+            machineNameInput.value = machineName;
+            displayMachineInput.value = machineName;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        function submitQuote(e) {
+            e.preventDefault();
+            
+            const machine = document.getElementById('machine-name').value;
+            const quantity = document.getElementById('quantity').value;
+            const period = document.getElementById('period').value;
+            const company = document.getElementById('company').value;
+            const cnpj = document.getElementById('cnpj').value || "Não informado";
+            const contact = document.getElementById('contact-name').value;
+            const location = document.getElementById('location').value;
+            const message = `
+*SOLICITAÇÃO DE ORÇAMENTO - SITE*
+----------------------------------
+*Equipamento:* ${machine}
+*Quantidade:* ${quantity}
+*Período:* ${period} dias
+
+*DADOS DO CLIENTE*
+*Empresa:* ${company}
+*CNPJ:* ${cnpj}
+*Responsável:* ${contact}
+*Local da Obra:* ${location}
+----------------------------------
+Aguardo retorno com disponibilidade e valores.
+            `.trim();
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = "5522999842500";
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            closeModal();
+        }
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.remove('py-4', 'shadow-xl');
+                header.classList.add('py-2', 'shadow-md');
+            } else {
+                header.classList.remove('py-2', 'shadow-md');
+                header.classList.add('py-4', 'shadow-xl');
+            }
+        });
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        let isMenuOpen = false;
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-[500px]', 'opacity-100');
+                iconMenu.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.remove('max-h-[500px]', 'opacity-100');
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                iconMenu.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

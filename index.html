@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otimitek Engenharia</title>
+    <link rel="icon" href="/image/favicon-32x32.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .btn-animate {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.25rem;
+            color: #fff !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-animate::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            transition: all 0.3s;
+        }
+
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            z-index: -1;
+            transition: all 0.3s ease-in-out;
+            border-radius: inherit;
+        }
+
+        .btn-animate:hover::before {
+            width: 100%;
+        }
+        
+        .btn-animate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-animate-yellow { color: #003B73 !important; }
+        .btn-animate-yellow::after { background-color: #F59E0B; }
+        .btn-animate-yellow::before { background-color: #d98c0a; }
+        .btn-animate-yellow:hover { color: #fff !important; }
+
+        .btn-animate-blue::after { background-color: #003B73; }
+        .btn-animate-blue::before { background-color: #002a52; }
+
+        .btn-animate-green::after { background-color: #25D366; }
+        .btn-animate-green::before { background-color: #128C7E; }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        .slide {
+            transition: opacity 1000ms ease-in-out;
+            opacity: 0;
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .text-gradient-gold {
+            background-image: linear-gradient(to right, #F59E0B, #fcd34d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-white relative w-full">
+    <a href="https://wa.me/5522999842500" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center justify-center group"
+       title="Fale conosco no WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 animate-pulse group-hover:animate-none">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="absolute right-full mr-3 bg-white text-slate-800 px-3 py-1 rounded shadow-lg text-sm font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
+            Solicite seu Orçamento
+        </span>
+    </a>
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-300 border-b-4 border-[#003B73] py-4 shadow-xl">
+        <div class="container mx-auto px-4 md:px-8 flex items-center justify-between">
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="#" class="block">
+                    <img src="/image/logo-otimitek.jpg" 
+                         alt="Otimitek Engenharia" 
+                         class="h-10 md:h-12 w-auto object-contain">
+                </a>
+            </div>
+            <div class="hidden lg:flex items-center absolute left-1/2 transform -translate-x-1/2">
+                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <a href="#" class="text-sm font-bold uppercase tracking-wide px-4 text-[#003B73] hover:text-[#003B73] transition-colors">Início</a>
+                        <span class="h-4 w-px bg-slate-300 block"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="#maquinas" class="text-sm font-bold uppercase tracking-wide px-4 text-slate-600 hover:text-[#003B73] transition-colors">Máquinas</a>
+                        <span class="h-4 w-px bg-slate-300 block"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="#servicos" class="text-sm font-bold uppercase tracking-wide px-4 text-slate-600 hover:text-[#003B73] transition-colors">Serviços</a>
+                        <span class="h-4 w-px bg-slate-300 block"></span>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="#contato" class="text-sm font-bold uppercase tracking-wide px-4 text-slate-600 hover:text-[#003B73] transition-colors">Contato</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center gap-6">
+                <a href="https://wa.me/5522999842500" class="flex items-center gap-2 text-[#003B73] hover:text-green-600 transition-colors font-bold text-sm group">
+                    <i data-lucide="phone" class="text-green-500 w-6 h-6 group-hover:scale-110 transition-transform"></i>
+                    <span>(22)99984-2500</span>
+                </a>
+                <a href="https://wa.me/5522999842500?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento!" 
+                target="_blank"
+                class="btn-animate btn-animate-yellow rounded-full gap-2">
+                  Orçamento
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </class=>
+                </a>
+            </div>
+            <button id="mobile-menu-btn" class="lg:hidden p-2 text-[#003B73] hover:bg-slate-50 rounded-full transition-colors relative">
+                <i data-lucide="menu" id="icon-menu" class="w-7 h-7"></i>
+                <i data-lucide="x" id="icon-close" class="w-7 h-7 hidden"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-slate-100 shadow-xl overflow-hidden transition-all duration-300 origin-top z-40 max-h-0 opacity-0">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="#" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Início <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+                <a href="#maquinas" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Máquinas <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+                <a href="#servicos" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Serviços <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+                <a href="#contato" class="text-slate-700 font-bold px-4 py-3 hover:bg-slate-50 rounded-lg flex justify-between items-center border-b border-slate-50">
+                    Contato <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                </a>
+                <div class="pt-4 flex flex-col gap-3">
+                   <a href="#" class="flex items-center justify-center gap-2 text-[#003B73] hover:text-green-600 font-bold py-2">
+                      <i data-lucide="phone" class="text-green-500 w-5 h-5"></i>
+                      (22) 99984-2500
+                   </a>
+                  <a href="https://wa.me/5522999842500?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento!" 
+                  target="_blank" 
+                  class="btn-animate btn-animate-yellow rounded-xl w-full gap-2 flex items-center justify-center cursor-pointer">
+                  Solicitar Orçamento
+                  <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                  </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="relative h-[650px] md:h-[700px] lg:h-[800px] flex items-center bg-slate-900 overflow-hidden mt-[80px]">
+        <div id="slider-container">
+            <div class="slide active" id="slide-0">
+                <img src="/image/photo-1541888946425-d81bb19240f5.webp" alt="Escavadeira" class="w-full h-full object-cover object-center transform scale-105">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-[#003B73]/50 to-transparent"></div>
+            </div>
+            <div class="slide" id="slide-1">
+                <img src="/image/photo-1580901368919-7738efb0f87e.webp" alt="Frota" class="w-full h-full object-cover object-center transform scale-105">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-[#003B73]/50 to-transparent"></div>
+            </div>
+        </div>
+        <div class="container mx-auto px-6 relative z-10 pt-10">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 text-[#003B73] px-4 py-1.5 rounded-full mb-6 font-bold text-xs uppercase tracking-widest shadow-lg animate-fade-in-up" style="background-color: #F59E0B;">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Referência em Locação</span>
+                </div>
+                <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight mb-6 drop-shadow-xl animate-fade-in-up delay-100">
+                    LOCAÇÃO DE <br/>
+                    <span class="text-gradient-gold">MÁQUINAS PESADAS</span>
+                </h1>
+                <p class="text-slate-200 text-lg md:text-xl leading-relaxed font-light mb-8 max-w-xl border-l-4 pl-6 animate-fade-in-up delay-200" style="border-color: #F59E0B;">
+                    Agilidade que a sua construção precisa. Equipamentos revisados, tecnologia de ponta e suporte técnico especializado.
+                </p>
+               <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-300">
+              <a href="#maquinas" target="_blank" class="btn-animate btn-animate-yellow rounded-lg gap-2 text-lg px-8 py-4 inline-flex items-center justify-center cursor-pointer">
+              VER CATÁLOGO
+              <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              </a>
+              <a href="https://wa.me/5522999842500?text=Olá,%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais!" target="_blank" class="btn-animate btn-animate-green rounded-lg gap-2 text-lg px-8 py-4 inline-flex items-center justify-center cursor-pointer">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+                 FALAR NO WHATSAPP
+              </a>
+            </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 right-10 flex gap-2 z-20">
+           <button id="prev-slide-btn" class="p-3 bg-white/10 hover:bg-[#F59E0B] hover:text-[#003B73] text-white rounded-full backdrop-blur-md transition-all">
+               <i data-lucide="chevron-left" class="w-6 h-6"></i>
+           </button>
+           <button id="next-slide-btn" class="p-3 bg-white/10 hover:bg-[#F59E0B] hover:text-[#003B73] text-white rounded-full backdrop-blur-md transition-all">
+               <i data-lucide="chevron-right" class="w-6 h-6"></i>
+           </button>
+        </div>
+    </section>
+    <section class="py-16 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-[#003B73] hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-blue-50 p-3 rounded-lg text-[#003B73]"><i data-lucide="map" class="w-6 h-6"></i></div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Alcance</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#003B73] mb-1 flex items-center">
+                        <span class="counter" data-target="8">0</span>
+                    </h3>
+                    <p class="text-slate-600 font-bold text-sm mb-3">Estados Atendidos</p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width: 60%; background-color: #F59E0B;"></div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-[#003B73] hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-blue-50 p-3 rounded-lg text-[#003B73]"><i data-lucide="briefcase" class="w-6 h-6"></i></div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Projetos</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#003B73] mb-1 flex items-center">
+                        +<span class="counter" data-target="90">0</span>
+                    </h3>
+                    <p class="text-slate-600 font-bold text-sm mb-3">Obras Realizadas</p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width: 85%; background-color: #F59E0B;"></div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-[#003B73] hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-blue-50 p-3 rounded-lg text-[#003B73]"><i data-lucide="truck" class="w-6 h-6"></i></div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Frota</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#003B73] mb-1 flex items-center">
+                        +<span class="counter" data-target="50">0</span>
+                    </h3>
+                    <p class="text-slate-600 font-bold text-sm mb-3">Máquinas e Veículos</p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width: 70%; background-color: #F59E0B;"></div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border-b-4 border-[#003B73] hover:-translate-y-1 transition-transform">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-blue-50 p-3 rounded-lg text-[#003B73]"><i data-lucide="award" class="w-6 h-6"></i></div>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Investimento</span>
+                    </div>
+                    <h3 class="text-4xl font-black text-[#003B73] mb-1 flex items-center">
+                        <span class="counter" data-target="40">0</span>M
+                    </h3>
+                    <p class="text-slate-600 font-bold text-sm mb-3">Reais Investidos</p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full" style="width: 90%; background-color: #F59E0B;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+             <img src="https://thumbs.dreamstime.com/b/entre-em-contato-conosco-call-center-e-equipe-trabalhando-conjunto-com-homens-mulheres-negras-que-ajudam-o-colega-de-trabalho-260418532.jpg" alt="Suporte" class="w-full h-full object-cover object-top">
+             <div class="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="text-center mb-16 max-w-3xl mx-auto bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-sm">
+             <span class="font-bold tracking-widest uppercase text-sm mb-2 block" style="color: #F59E0B;">Processo Otimizado</span>
+             <h2 class="text-3xl md:text-4xl font-extrabold text-[#003B73] leading-tight mb-6">
+               Sua Locação em <span class="underline decoration-[#003B73] decoration-4 underline-offset-4" style="color: #F59E0B;">3 Etapas</span>
+             </h2>
+             <p class="text-slate-700 text-lg font-medium">
+               Esqueça a complexidade. Criamos um fluxo direto para que você tenha o equipamento certo, na hora certa.
+             </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
+            <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 border-t-2 border-dashed border-slate-400 -translate-y-1/2 z-0 opacity-60"></div>
+
+            <!-- Passo 1 -->
+            <div class="bg-[#003B73] rounded-3xl p-8 relative z-10 shadow-xl border border-[#003B73] group hover:-translate-y-2 transition-transform">
+               <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg mb-8 transition-transform group-hover:scale-110" style="background-color: #F59E0B;">
+                 <i data-lucide="search" class="w-10 h-10 text-[#003B73]"></i>
+               </div>
+               <div class="flex items-baseline gap-2 mb-4">
+                 <span class="text-5xl font-black text-white/20 group-hover:text-white/40 transition-colors">01.</span>
+                 <h3 class="text-2xl font-black text-white">Consulta</h3>
+               </div>
+               <p class="text-slate-300 leading-relaxed">
+                 Fale com nosso time técnico. Identificamos a máquina exata para a sua necessidade específica.
+               </p>
+               <div class="w-12 h-1.5 mt-6 rounded-full" style="background-color: #F59E0B;"></div>
+            </div>
+
+            <!-- Passo 2 -->
+            <div class="bg-[#003B73] rounded-3xl p-8 relative z-10 shadow-xl border border-[#003B73] group hover:-translate-y-2 transition-transform">
+               <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg mb-8 transition-transform group-hover:scale-110" style="background-color: #F59E0B;">
+                 <i data-lucide="file-signature" class="w-10 h-10 text-[#003B73]"></i>
+               </div>
+               <div class="flex items-baseline gap-2 mb-4">
+                 <span class="text-5xl font-black text-white/20 group-hover:text-white/40 transition-colors">02.</span>
+                 <h3 class="text-2xl font-black text-white">Contratação</h3>
+               </div>
+               <p class="text-slate-300 leading-relaxed">
+                 Receba o orçamento e feche o contrato de forma ágil, digital e sem burocracia desnecessária.
+               </p>
+               <div class="w-12 h-1.5 mt-6 rounded-full" style="background-color: #F59E0B;"></div>
+            </div>
+
+            <!-- Passo 3 -->
+            <div class="bg-[#003B73] rounded-3xl p-8 relative z-10 shadow-xl border border-[#003B73] group hover:-translate-y-2 transition-transform">
+               <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg mb-8 transition-transform group-hover:scale-110" style="background-color: #F59E0B;">
+                 <i data-lucide="truck" class="w-10 h-10 text-[#003B73]"></i>
+               </div>
+               <div class="flex items-baseline gap-2 mb-4">
+                 <span class="text-5xl font-black text-white/20 group-hover:text-white/40 transition-colors">03.</span>
+                 <h3 class="text-2xl font-black text-white">Entrega</h3>
+               </div>
+               <p class="text-slate-300 leading-relaxed">
+                 Equipamento revisado entregue na sua obra. Conte com nosso suporte técnico total.
+               </p>
+               <div class="w-12 h-1.5 mt-6 rounded-full" style="background-color: #F59E0B;"></div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section id="maquinas" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="font-bold tracking-widest uppercase text-sm mb-2 block" style="color: #F59E0B;">Nossa Frota</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#003B73]">Equipamentos para Todo Tipo de Obra</h2>
+                <div class="w-24 h-1.5 mt-4 mx-auto rounded-full" style="background-color: #F59E0B;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Categoria 1 -->
+                <div class="bg-[#003B73] rounded-2xl p-6 flex flex-col items-center text-center hover:-translate-y-2 transition-transform shadow-lg border border-[#003B73] group">
+                    <div class="bg-white p-4 rounded-xl mb-6 w-full flex justify-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1" style="background-color: #F59E0B;"></div>
+                        <img src="https://pngimg.com/d/excavator_PNG62.png" alt="Terraplanagem" class="h-32 object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div class="mb-4 p-3 rounded-full bg-white/10 text-white group-hover:bg-[#F59E0B] group-hover:text-[#003B73] transition-colors">
+                        <i data-lucide="map" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2" style="color: #F59E0B;">Terraplanagem</h3>
+                    <p class="text-slate-300 text-sm mb-6 flex-grow leading-relaxed">Motoniveladoras, Escavadeiras, Tratores de Esteira e Rolos Compactadores.</p>
+                   <a href="/catalogo" class="btn-animate btn-animate-yellow w-full rounded-lg gap-2 flex items-center justify-center text-center">
+                    Ver Modelos <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                <!-- Categoria 2 -->
+                <div class="bg-[#003B73] rounded-2xl p-6 flex flex-col items-center text-center hover:-translate-y-2 transition-transform shadow-lg border border-[#003B73] group">
+                    <div class="bg-white p-4 rounded-xl mb-6 w-full flex justify-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1" style="background-color: #F59E0B;"></div>
+                        <img src="https://transponteslocacoes.com.br/wp-content/uploads/2014/04/caminh%C3%A3o-basculante.jpg" alt="Construção" class="h-32 object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div class="mb-4 p-3 rounded-full bg-white/10 text-white group-hover:bg-[#F59E0B] group-hover:text-[#003B73] transition-colors">
+                        <i data-lucide="building-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2" style="color: #F59E0B;">Construção Civil</h3>
+                    <p class="text-slate-300 text-sm mb-6 flex-grow leading-relaxed">Caminhões Basculantes, Betoneiras e Guindastes.</p>
+                    <a href="/catalogo" class="btn-animate btn-animate-yellow w-full rounded-lg gap-2 flex items-center justify-center text-center">
+                    Ver Modelos <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                <!-- Categoria 3 -->
+                <div class="bg-[#003B73] rounded-2xl p-6 flex flex-col items-center text-center hover:-translate-y-2 transition-transform shadow-lg border border-[#003B73] group">
+                    <div class="bg-white p-4 rounded-xl mb-6 w-full flex justify-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1" style="background-color: #F59E0B;"></div>
+                        <img src="https://s7d2.scene7.com/is/image/Caterpillar/CM20190730-ac535-dd965" alt="Compacta" class="h-32 object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div class="mb-4 p-3 rounded-full bg-white/10 text-white group-hover:bg-[#F59E0B] group-hover:text-[#003B73] transition-colors">
+                        <i data-lucide="ruler" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2" style="color: #F59E0B;">Linha Compacta</h3>
+                    <p class="text-slate-300 text-sm mb-6 flex-grow leading-relaxed">Mini Carregadeiras e Mini Escavadeiras ideais para espaços confinados.</p>
+                    <a href="/catalogo" class="btn-animate btn-animate-yellow w-full rounded-lg gap-2 flex items-center justify-center text-center">
+                    Ver Modelos <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                 <!-- Categoria 4 -->
+                 <div class="bg-[#003B73] rounded-2xl p-6 flex flex-col items-center text-center hover:-translate-y-2 transition-transform shadow-lg border border-[#003B73] group">
+                    <div class="bg-white p-4 rounded-xl mb-6 w-full flex justify-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1" style="background-color: #F59E0B;"></div>
+                        <img src="https://www.atlascopco.com/content/dam/atlas-copco/construction-technique/construction-tools/pictures/handheld-pneumatic-equipment/breakers/TEX150PE_front.jpg/jcr:content/renditions/cq5dam.web.1200.628.jpeg" alt="Implementos" class="h-32 object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div class="mb-4 p-3 rounded-full bg-white/10 text-white group-hover:bg-[#F59E0B] group-hover:text-[#003B73] transition-colors">
+                        <i data-lucide="hammer" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2" style="color: #F59E0B;">Implementos</h3>
+                    <p class="text-slate-300 text-sm mb-6 flex-grow leading-relaxed">Rompedores hidráulicos, Garras e Perfuratrizes.</p>
+                    <a href="/catalogo" class="btn-animate btn-animate-yellow w-full rounded-lg gap-2 flex items-center justify-center text-center">
+                    Ver Modelos <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="w-full lg:w-1/2 relative">
+              <div class="absolute -top-10 -left-10 w-40 h-40 bg-[#003B73]/10 rounded-full blur-2xl"></div>
+              <div class="absolute -bottom-10 -right-10 w-60 h-60 rounded-full blur-3xl opacity-20" style="background-color: #F59E0B;"></div>
+              <img src="https://png.pngtree.com/png-clipart/20240612/original/pngtree-yellow-tractor-clip-art-png-image_15311498.png" alt="Trator" class="w-full relative z-10 drop-shadow-2xl transform hover:scale-105 transition-transform duration-700">
+            </div>
+            <div class="w-full lg:w-1/2 space-y-8">
+              <div>
+                <h2 class="text-4xl lg:text-5xl font-black text-[#003B73] mb-4 italic leading-tight">
+                  EXCELÊNCIA E <br/> CAPACIDADE OPERACIONAL.
+                </h2>
+                <p class="text-slate-600 text-lg leading-relaxed">
+                  Com uma frota moderna e robusta, aliada a uma equipe técnica altamente especializada, a Otimitek atende demandas de qualquer porte com eficiência garantida.
+                </p>
+              </div>
+              <div class="space-y-4">
+                <div class="bg-[#003B73] p-6 rounded-2xl flex items-start gap-5 shadow-lg border-l-8 hover:translate-x-2 transition-transform" style="border-color: #F59E0B;">
+                  <div class="bg-white/10 p-3 rounded-xl text-[#F59E0B]"><i data-lucide="truck" class="w-8 h-8"></i></div>
+                  <div>
+                    <h4 class="text-xl font-bold text-white mb-1">Logística Inteligente</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed">Cuidamos de todo o transporte e operação com agilidade em todo o Brasil.</p>
+                  </div>
+                </div>
+                <div class="bg-[#003B73] p-6 rounded-2xl flex items-start gap-5 shadow-lg border-l-8 hover:translate-x-2 transition-transform" style="border-color: #F59E0B;">
+                  <div class="bg-white/10 p-3 rounded-xl text-[#F59E0B]"><i data-lucide="settings" class="w-8 h-8"></i></div>
+                  <div>
+                    <h4 class="text-xl font-bold text-white mb-1">Suporte Técnico Dedicado</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed">Manutenção preventiva rigorosa e suporte técnico especializado constante.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section id="servicos" class="py-24 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative order-2 lg:order-1">
+              <div class="absolute -top-10 -left-10 w-full h-full bg-[#003B73] rounded-3xl -z-10 transform rotate-3"></div>
+              <div class="absolute -bottom-10 -right-10 w-2/3 h-2/3 rounded-full -z-20 opacity-20 blur-3xl" style="background-color: #F59E0B;"></div>
+              
+              <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop" alt="Retroescavadeira" class="rounded-2xl shadow-2xl w-full h-[500px] object-cover border-4 border-white">
+              
+              <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white px-8 py-4 rounded-xl shadow-xl flex items-center gap-4 border-l-4 whitespace-nowrap" style="border-color: #F59E0B;">
+                <div class="bg-green-100 p-2 rounded-full"><i data-lucide="phone" class="text-green-600 w-6 h-6"></i></div>
+                <div>
+                  <p class="text-xs text-slate-500 font-bold uppercase tracking-wide">Fale Conosco Agora</p>
+                  <p class="text-xl font-black text-[#003B73]">0800 022 2626</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="order-1 lg:order-2">
+              <span class="font-bold tracking-widest uppercase text-sm mb-2 block" style="color: #F59E0B;">Quem Somos</span>
+              <h2 class="text-4xl lg:text-5xl font-extrabold text-[#003B73] mb-6 leading-tight">Soluções Completas <br/> de Engenharia</h2>
+              <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+                Mais do que aluguel de máquinas, entregamos <span class="font-bold text-[#003B73]">soluções</span>. 
+                Todos os nossos serviços obedecem rigorosamente às normas de preservação ambiental.
+              </p>
+
+              <div class="grid grid-cols-2 gap-x-4 gap-y-6 mb-8">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="building-2" class="shrink-0 w-6 h-6" style="color: #F59E0B;"></i>
+                    <div><h4 class="font-bold text-[#003B73]">Edificações</h4><p class="text-sm text-slate-500">Projetos civis</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i data-lucide="droplets" class="shrink-0 w-6 h-6" style="color: #F59E0B;"></i>
+                    <div><h4 class="font-bold text-[#003B73]">Água e Esgoto</h4><p class="text-sm text-slate-500">Saneamento</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i data-lucide="zap" class="shrink-0 w-6 h-6" style="color: #F59E0B;"></i>
+                    <div><h4 class="font-bold text-[#003B73]">Elétrica</h4><p class="text-sm text-slate-500">Energia</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i data-lucide="leaf" class="shrink-0 w-6 h-6" style="color: #F59E0B;"></i>
+                    <div><h4 class="font-bold text-[#003B73]">Áreas Verdes</h4><p class="text-sm text-slate-500">Sustentabilidade</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <section class="py-20 bg-[#f9fafb] relative">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-[#003B73] mb-6">A Otimitek Engenharia</h2>
+            <div class="w-24 h-1.5 mx-auto rounded-full mb-8" style="background-color: #F59E0B;"></div>
+          </div>
+          
+          <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl text-slate-700 leading-relaxed space-y-6 text-lg border-t-4" style="border-color: #F59E0B;">
+            <p>
+              A <strong class="text-[#003B73]">Otimitek Engenharia</strong> oferece soluções completas e atualizadas em engenharia elétrica, civil e preservação ambiental, reunindo uma equipe altamente especializada e com <span class="bg-yellow-100 px-1 rounded font-bold text-[#003B73]">mais de 20 anos de experiência</span>.
+            </p>
+            <p>
+              Nossos serviços seguem rigorosos padrões de qualidade, sempre alinhados às especificações contratuais. Nossos veículos operacionais são equipados com oficinas volantes, garantindo agilidade.
+            </p>
+          </div>
+        </div>
+    </section>
+    <section class="py-16 bg-white overflow-hidden">
+        <div class="container mx-auto px-6 mb-10 text-center">
+          <span class="font-bold tracking-widest uppercase text-sm mb-2 block" style="color: #F59E0B;">Confiança</span>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[#003B73]">Empresas que Atendemos</h2>
+        </div>
+        <div class="relative flex overflow-x-hidden group">
+          <div class="animate-marquee whitespace-nowrap flex items-center gap-12 py-4 px-4" id="marquee-content">
+          </div>
+        </div>
+    </section>
+    <section id="contato" class="py-20 bg-[#003B73] text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 rounded-full blur-[120px] opacity-10" style="background-color: #F59E0B;"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-10" style="background-color: #F59E0B;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-2">Fale Conosco</h2>
+            <p class="font-bold uppercase tracking-widest text-sm" style="color: #F59E0B;">Estamos prontos para atender você</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all group">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style="background-color: #F59E0B;">
+                <i data-lucide="mail" class="text-[#003B73] w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-4" style="color: #F59E0B;">E-mails</h3>
+              <div class="space-y-2 text-slate-300">
+                <a href="#" class="block hover:text-white transition-colors">comercial@otimitek.com.br</a>
+                <a href="#" class="block hover:text-white transition-colors">financeiro@otimitek.com.br</a>
+              </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all group">
+              <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform" style="background-color: #F59E0B;">
+                <i data-lucide="phone" class="text-[#003B73] w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold mb-4" style="color: #F59E0B;">Informações</h3>
+              <div class="space-y-2 text-slate-300">
+                <p>(22) 2725-4700</p>
+                <p class="font-bold text-white text-lg">0800 022 2626</p>
+              </div>
+            </div>
+            <div class="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all group">
+                <div class="w-14 h-14 rounded-full flex items-center justify-center mb-6 group-hover:scale-105 transition-transform" style="background-color: #F59E0B;">
+                  <i data-lucide="map-pin" class="text-[#003B73] w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4" style="color: #F59E0B;">Endereço</h3>
+                <p class="text-slate-300 leading-relaxed">
+                  Rua Virgulino Ferreira Lampião, nº 21.<br/>
+                  Jockey II<br/>
+                  Campos dos Goytacazes - RJ
+                </p>
+              </div>
+          </div>
+        </div>
+    </section>
+    <footer class="bg-[#002a52] text-white py-12 border-t border-white/5">
+        <div class="container mx-auto px-6">
+          <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+              <div class="flex items-center gap-3 justify-center md:justify-start mb-4">
+                 <a href="#" class="block">
+                    <img src="/image/logo-otimitek.jpg" 
+                         alt="Otimitek Engenharia" 
+                         class="h-10 md:h-12 w-auto object-contain rounded">
+                 </a>
+              </div>
+              <p class="text-slate-400 text-sm mb-4 max-w-xs mx-auto md:mx-0">Soluções robustas em engenharia e locação.</p>
+              <div class="flex gap-4 justify-center md:justify-start">
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="text-slate-400 hover:text-[#F59E0B]"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+              </div>
+            </div>
+            <div class="flex flex-col items-center">
+              <span class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Certificado de Conformidade</span>
+              <div class="bg-white p-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+                <img src="https://www.otimitek.com.br/images/certificacao-conformidade-profissional.jpg" alt="Certificado de Conformidade CREA" class="w-24 h-auto object-contain">
+              </div>
+            </div>
+            <div class="text-center md:text-right text-slate-500 text-sm">
+              <p>&copy; <span id="year"></span> Otimitek Engenharia.</p>
+              <p>Todos os direitos reservados.</p>
+            </div>
+          </div>
+        </div>
+    </footer>
+    <script>
+        lucide.createIcons();
+        document.getElementById('year').textContent = new Date().getFullYear();
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.remove('py-4', 'shadow-xl');
+                header.classList.add('py-2', 'shadow-md');
+            } else {
+                header.classList.remove('py-2', 'shadow-md');
+                header.classList.add('py-4', 'shadow-xl');
+            }
+        });
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        let isMenuOpen = false;
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('max-h-0', 'opacity-0');
+                mobileMenu.classList.add('max-h-[500px]', 'opacity-100');
+                iconMenu.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.remove('max-h-[500px]', 'opacity-100');
+                mobileMenu.classList.add('max-h-0', 'opacity-0');
+                iconMenu.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            }
+        });
+        const slides = document.querySelectorAll('.slide');
+        const heroTitle = document.getElementById('hero-title');
+        let currentSlide = 0;
+        
+        const updateSlide = () => {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            if (currentSlide === 0) {
+                heroTitle.innerHTML = `LOCAÇÃO DE <br/><span class="text-gradient-gold">MÁQUINAS PESADAS</span>`;
+            } else {
+                heroTitle.innerHTML = `FROTA PRONTA <br/><span class="text-gradient-gold">PARA SUA OBRA</span>`;
+            }
+        };
+        const nextSlide = () => {
+            currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
+            updateSlide();
+        }
+        const prevSlide = () => {
+            currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
+            updateSlide();
+        }
+        document.getElementById('next-slide-btn').addEventListener('click', nextSlide);
+        document.getElementById('prev-slide-btn').addEventListener('click', prevSlide);
+        setInterval(nextSlide, 5000);
+        const counters = document.querySelectorAll('.counter');
+        const observerOptions = { threshold: 0.1 };
+        const runCounter = (el) => {
+            const target = +el.getAttribute('data-target');
+            const duration = 2000;
+            const stepTime = 16;
+            const increment = target / (duration / stepTime);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    el.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.ceil(current);
+                }
+            }, stepTime);
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    runCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        counters.forEach(counter => observer.observe(counter));
+        const clients = [
+    { name: "Prefeitura de Angra", logo: "https://www.otimitek.com.br/images/angra.png" },
+    { name: "Barra Mansa", logo: "https://www.otimitek.com.br/images/barra-mansa.png" },
+    { name: "Prefeitura de Campos", logo: "https://www.otimitek.com.br/images/prefeitura-de-campos.png" },
+    { name: "Cantagalo", logo: "https://www.otimitek.com.br/images/cantagalo.png" },
+    { name: "Casimiro", logo: "https://www.otimitek.com.br/images/prefeituradecasimiro.png" },
+    { name: "Der-RJ", logo: "https://www.otimitek.com.br/images/der-rj.png" },
+    { name: "Faetec", logo: "https://www.otimitek.com.br/images/faetec.png" },
+    { name: "Furnas", logo: "https://www.otimitek.com.br/images/furnas.png" },
+    { name: "Infraero", logo: "https://www.otimitek.com.br/images/url.png" },
+    { name: "Paraty", logo: "https://www.otimitek.com.br/images/paraty.png" },
+    { name: "Rio", logo: "https://www.otimitek.com.br/images/rio-luz.png" },
+    { name: "Governo Rio", logo: "https://www.otimitek.com.br/images/governo-do-rj.png" },
+    { name: "São João da Barra", logo: "https://www.otimitek.com.br/images/sao-joao-da-barra.png" },
+    ];
+    const marqueeContainer = document.getElementById('marquee-content');
+    const allClients = [...clients, ...clients]; 
+    allClients.forEach(client => {
+    const div = document.createElement('div');
+    div.className = "inline-flex items-center justify-center px-4 py-2 bg-white rounded-xl border border-slate-100 shadow-sm mx-4 h-24 w-48 hover:border-[#F59E0B] transition-all duration-300 grayscale hover:grayscale-0 cursor-default select-none";
+    const img = document.createElement('img');
+    img.src = client.logo; 
+    img.alt = client.name;
+    img.className = "max-h-full max-w-full object-contain";
+    div.appendChild(img);
+    marqueeContainer.appendChild(div);
+});
+</script>
+</body>
+</html>
